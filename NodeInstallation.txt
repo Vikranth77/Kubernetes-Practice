@@ -1,0 +1,42 @@
+    1  clear
+    2  sudo apt-get update && sudo apt-get install -y \ 
+    3  sudo apt-get update && sudo apt-get install -y   apt-transport-https ca-certificates curl software-properties-common gnupg2
+    4  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add -
+    5  sudo add-apt-repository   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    6    $(lsb_release -cs) \
+    7    stable"
+    8  sudo apt-get update && sudo apt-get install -y   containerd.io=1.2.13-2   docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)   docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
+    9  sudo mkdir /etc/docker
+   10  cat <<EOF | sudo tee /etc/docker/daemon.json
+   11  {
+   12    "exec-opts": ["native.cgroupdriver=systemd"],
+   13    "log-driver": "json-file",
+   14    "log-opts": {
+   15      "max-size": "100m"
+   16    },
+   17    "storage-driver": "overlay2"
+   18  }
+   19  EOF
+   20  sudo mkdir -p /etc/systemd/system/docker.service.d
+   21  sudo systemctl daemon-reload
+   22  clear
+   23  sudo systemctl restart docker
+   24  sudo systemctl enable docker
+   25  clear
+   26  sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+   27  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+   28  cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+   29  deb https://apt.kubernetes.io/ kubernetes-xenial main
+   30  EOF
+   31  sudo apt-get update
+   32  sudo apt-get install -y kubelet kubeadm kubectl
+   33  clear
+   34  kubeadm join 172.31.40.157:6443 --token rn9e4r.ua09tjtmlqtwuuju --discovery-token-ca-cert-hash sha256:a2a97d5110591073eec2063aa92085d5ca60edb3782047897f351889f5326152
+   35  clear
+   36  exit
+   37  clear
+   38  kubeadm join 172.31.40.157:6443 --token rn9e4r.ua09tjtmlqtwuuju --discovery-token-ca-cert-hash sha256:a2a97d5110591073eec2063aa92085d5ca60edb3782047897f351889f5326152
+   39  clear
+   40  kubeadm join 172.31.40.157:6443 --token r26o97.odzn5xo54wzjpfs0 --discovery-token-ca-cert-hash sha256:a2a97d5110591073eec2063aa92085d5ca60edb3782047897f351889f5326152
+   41  clear
+   42  history > NodeInstallation.txt
