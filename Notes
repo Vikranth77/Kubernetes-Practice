@@ -259,7 +259,9 @@ Service
 Accessing the Pods: 
 -Loadbalancers
 -nodeport
--Ingress
+-ClusterIP
+-ExternalName
+
 =============================
 Deployment: 
 - Deployment is a yaml file. 
@@ -270,3 +272,30 @@ Deployment:
 3. Deployment (replica set): mainating the new versions
 			- Rollout Deployment
 			- Rollback Deployment
+=============================================
+Download the OPEN MRS (.war)
+-Create Docker file.
+  FROM tomcat:8.0
+  LABEL author="OpenMRS2.1"
+  ADD openmrs.war /usr/local/tomcat/webapps/openmrs.war
+  EXPOSE 8080
+  CMD ["catalina.sh","run"]
+  	
+ #docker buid -t openmrs:2.1.2
+ #docker tag openmrs:2.1.2 userName/openmrs:2.1.2
+ #docker login
+ #docker push username/openmrs:2.1.2
+
+For NoeJs & Python -differnet docker file
+Create the POD.yaml
+Create the Replica.yml
+create the Deployment.yml
+
+
+
+
+
+
+  
+  
+
