@@ -1,0 +1,272 @@
+Kubernertes:(Orachestration Tool)
+====================
+Micro-Services == Docker + Kubernertes
+
+Introduction: 
+=======================
+Bring up the Failed containers and Scaling up the Containers- Using 
+
+1. Pets(In Home) and Cattele(At Out Side)
+
+2. Standard Package Format
+3. Manifest (From and To Address) - Write these files by Devops Engineers
+     - What Kubernertes want to do (Not How do you want)
+
+====================
+Architecure
+================
+1. Master -- input is Manifest File.
+	- To get the work done thorough the nodes(Minion)
+	- To be installed on Linux Environment.
+	- Multiple Master's for High Availability
+	- Components:(4)
+		1. KUBE-API-SERVER(Interface): Communication Purpose from the External world. (Manifest, Commandline, Restful API,Jason Format)
+		2. Cluster Store(ETCD): Memory of the Master.Key-value store. It uses the ETCD. 
+		3. KUBE-Control-Manager(State): It will always maintains the state.(Node Controller, End Point Controller, Namespace Controller)- Creating and deleting the PODS.
+		4. KUBE-SCHEDULER: It will used to complete the work in order to bring up Pods on Nodes.   
+		
+	Kubectl command along with the manifestfile(Yaml, Json)
+2. Node 
+	- Actual work doing 
+	- POD- Smaller thing in the Kubernetes.
+	- Nodes are installed on Linux.
+	- Components: 
+		1. Kubelet: Main Agent which recieves communication from the master.Report to master. Port Numbers:
+		2. Container Engine: Pulling Images, Starting /Stoping the Containers. (Docker/Rkt)
+		3. Kube-Proxy: Kubernets Networking.Pod Networking.(Every POD gets one IP address.
+		
+=======================================================================
+POD: 
+		- Small Unit to create in the Kubernetes
+		- Always Containers are created inside the POD
+		- POD Scaling- Increase the POD's not the Contaners. 
+		- POD will contain the IPD address. (Not a COntainer) 
+		Tight Coupling
+		Loose Coupling
+		Load Balancing
+		
+		POD Life Cycle: 
+			1. Pending
+			2. Running
+			3. Success/Failed
+		Docker Life Cycle:	
+		1. Created
+		2. Started
+		3. Stopped
+		4. Deleted
+===========================
+Services:
+Logical Component-Software defined Network. 
+To manage the newly created POD's along with their IP Address. we are using the service.
+			Create the Service- It will have the IP Address.
+			Common Interface
+			Updating the new versions without down time.
+Lables: To achieve this we are creating the Lables.
+	PROD
+	BE
+	1.3
+===================
+
+Deployments:
+- It's all about the Declations in Manifest File.
+- Giving new versions -Means giving the New PODS.
+- We can rollback the changes if the new changes are not working.
+
+
+=============================
+Flow of the Kubernernets:
+
+1. CI- Build, Test and Package (Ir respective of the Technology- Java,.net,Python,AngularJs....)
+2. Creating a Docker Image -with the help of the Dockerfile.
+3. Push the Docker file into the Repository(DockerHub/Artifactory/Nexus)
+4. Deploy this into the Development environment with Kubernetes.
+======================================================
+Installation of Kubernetes:
+==============================
+1. On Win 10 Minikube
+2. Manual Installation (Using Linux Commands)-Tough Installation
+3. Cloud Provider- Azure,GCP,EKS -It is as Service. (Azure in Resume - For the Prod)
+4. Kube-adm is for the Dev or Test Environments (Local We used Kube-Adm)
+
+==================
+Create 3 Instances t2.large
+Step-1
+1. Master
+2. Node1
+3. Node2
+
+Step-2 
+Create the Elastic IP Address and associate to the Master and Nodes. (Optional)
+
+Step-3:
+Configure Master: 
+	- Installing Docker:
+			https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
+		
+		sudo apt-get update && sudo apt-get install -y \ 
+		apt-transport-https ca-certificates curl software-properties-common gnupg2
+		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add -
+			sudo add-apt-repository \
+				"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+				$(lsb_release -cs) \
+				stable"
+			sudo apt-get update && sudo apt-get install -y \
+				containerd.io=1.2.13-2 \
+				docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs) \
+				docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
+		sudo mkdir /etc/docker
+			
+		 sudo mkdir -p /etc/systemd/system/docker.service.d
+     sudo systemctl daemon-reload
+    sudo systemctl restart docker
+       sudo systemctl enable docker
+
+	   
+	- Installing KubeADM,kublet,kubectl:
+		https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+		
+		sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+
+
+
+
+
+Network- kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
+
+
+
+
+	mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  
+  
+ kubeadm join <control-plane-host>:<control-plane-port> --token <token> --discovery-token-ca-cert-hash sha256:<hash>
+
+ 
+kubeadm join 172.31.40.157:6443 --token r26o97.odzn5xo54wzjpfs0 --discovery-token-ca-cert-hash sha256:a2a97d5110591073eec2063aa92085d5ca60edb3782047897f351889f5326152
+
+
+kubeadm join 172.31.40.157:6443 --token rn9e4r.ua09tjtmlqtwuuju --discovery-token-ca-cert-hash sha256:a2a97d5110591073eec2063aa92085d5ca60edb3782047897f351889f5326152
+
+
+
+
+
+kubectl get nodes -o wide
+
+
+==========
+
+Steps to create the POD's:
+
+apiversion: v1
+kind: pod
+metadata: 
+  name: hello-pod
+spec:
+  containers: 
+  - name: hello-ctr
+      image: jenkins
+      ports: 
+      - containerPort: 8080
+	  
+
+Create a directory under the user Ubuntu
+ mkdir manifests
+ vi pod.yml
+ =====================
+	apiversion: Version of the Schema Manager
+	kind: pod
+	metadata: *********Complex Object*********** 
+		name: ************Name of the Meta Data**********
+	spec:
+	  containers:
+	  - name: *******Name of the Container**********
+	       image: *****Image-Name*********
+		   ports: 
+		   - containerPort: ***PortNumber*******
+----------------------------------------------------------
+Apply the kubectl apply -f pod.yml
+=============================
+- Every pod will have ip address. 
+kubectl get pods 
+kubectl get pods -o wide
+
+======================================
+YAML- Yet Another Markup Language.
+ -It is having the Key-Value Pairs
+ hypen '- ' is repesnted as List Item.
+
+Eg: courses:
+      - Devops
+	  - AWS
+	  - Azure
+	Address:
+	  - Door No: 
+	  - Street:
+	  - Landmark:
+	  - State:
+	  - PINCODE:
+	  - Country:
+====================
+kubectl ---Will take Yaml file and converts into the JSON speak with KUBE-API Manager.
+
+kubeapi will complete the task with to return values:
+1. Object Specification (in the Yaml we are providing)
+2. Object Status 
+==========================
+How to access the Pod:
+	Expose the Node port kubernetes
+Nodeport is not availble on the API-Version
+
+kubectl expose	with Services and lables
+=======================
+Replica sets: How many pods are required. 
+
+==================
+apiversion: v1
+kind: ReplicationController
+metadata: 
+  name: simple-rc
+spec: 
+  replicas: 5
+  selector: 
+    app: nginx
+template:
+  metadata:
+    labels: 
+    app: nginx
+    version: "1.0"
+  spec:
+     containers:
+     - name: simple
+       image: nginx
+       ports: 
+       - containerPort: 80 	   
+=====================================================
+Service
+-Expose the Port-- Nodeport
+
+Accessing the Pods: 
+-Loadbalancers
+-nodeport
+-Ingress
+=============================
+Deployment: 
+- Deployment is a yaml file. 
+- Deplyment: What are the pods and no.of pods which you want.
+           - Stratagy(in Depolyment)
+1. Pod
+2. ReplicationController
+3. Deployment (replica set): mainating the new versions
+			- Rollout Deployment
+			- Rollback Deployment
