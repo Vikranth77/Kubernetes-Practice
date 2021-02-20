@@ -1,0 +1,202 @@
+    1  clear
+    2  sudo su -
+    3  clear
+    4  mkdir -p $HOME/.kube
+    5  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    6  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    7  kubectl apply -f <add-on.yaml>
+    8  kubectl apply -f
+    9  clear
+   10  kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+   11  clear
+   12  kubectl get pods --all-namespaces
+   13  clear
+   14  ls -ltr
+   15  kubectl get pods --all-namespaces
+   16  hostname master
+   17  sudo su -
+   18  sudo hostname master
+   19  exit
+   20  clear
+   21  kubectl get nodes
+   22  clear
+   23  kubeadm init
+   24  sudo su -
+   25  kubeadm --help
+   26  clear
+   27  kubeadm join
+   28  kubeadm token list
+   29  clear
+   30  kubeadm init
+   31  sudo -i
+   32  kubectl get nodes
+   33  clear
+   34  kubectl get nodes
+   35  clear
+   36  ls -ltr
+   37  kubectl get nodes
+   38  mkdir manifests
+   39  cd manifests/
+   40  vi pod.yml
+   41  kubectl apply -f pod.yml
+   42  vi pod.yml
+   43  kubectl apply -f pod.yml
+   44  kubectl get nodes
+   45  kubectl get pods
+   46  kubectl get pods -o wide
+   47  kubectl get pods --all-namespaces
+   48  kubectl get pods --all-namespaces -o wide
+   49  kubectl get nodes
+   50  kubectl get pods
+   51  kubectl get pods -o wide
+   52  clear
+   53  kubectl get pods
+   54  clear
+   55  vi pod.yml 
+   56  clear
+   57  kubectl get pods
+   58  kubectl delete -f hello-pod
+   59  kubectl delete hello-pod
+   60  clear
+   61  kubectl get pods
+   62  kubectl apply pod.yml 
+   63  kubectl apply -f pod.yml 
+   64  clear
+   65  cp pod.yml mypod.yml
+   66  kubectl apply -f mypod.yml 
+   67  vi mypod.yml 
+   68  kubectl apply -f mypod.yml 
+   69  vi mypod.yml 
+   70  kubectl apply -f mypod.yml 
+   71  clear
+   72  kubectl get pods
+   73  cp mypod.yml mypod1.yml
+   74  vi mypod1.yml 
+   75  clear
+   76  kubectl apply -f mypod1.yml 
+   77  clear
+   78  kubectl get pods
+   79  docker images
+   80  sudo docker images
+   81  kubectl get pods -o wide
+   82  exit
+   83  clear
+   84  ls -ltr
+   85  kubectl get pods
+   86  kubectl get nodes
+   87  clear
+   88  l
+   89  ls -ltr
+   90  clear
+   91  kubectl get pods
+   92  cd manifests/
+   93  ls 
+   94  vi pod.yml 
+   95  kubectl delete pod.yml 
+   96  kubectl delete -f pod.yml 
+   97  clear
+   98  ls -ltr
+   99  kubectl delete -f pod.yml
+  100  clear
+  101  kubectl get pods
+  102  clear
+  103  kubectl delete -f mypod1.yml mypod.yml 
+  104  kubectl delete -f mypod1.yml
+  105  kubectl delete -f mypod.yml
+  106  clear
+  107  ls
+  108  cd ..
+  109  mkdir simple
+  110  cd simple/
+  111  kubectl get pods
+  112  clear
+  113  vi simple-rc.yml
+  114  ls 
+  115  kubectl apply -f simple-rc.yml 
+  116  vi simple-rc.yml
+  117  kubectl apply -f simple-rc.yml 
+  118  vi simple-rc.yml
+  119  vi simple-rc.yml
+  120  clear
+  121  kubectl apply -f simple-rc.yml 
+  122  clear
+  123  kubectl get rc
+  124  kubectl get pods
+  125  kubectl get pods -o wide
+  126  kubectl delete -f simple-rc-vpjvn
+  127  kubectl get pods -o wide
+  128  kubectl delete pods/simple-rc-vpjvn
+  129  clear
+  130  kubectl get pods -o wide
+  131  kubectl get nodes
+  132  kubectl get rc
+  133  kubectl get pods
+  134  kubectl delete pods/simple-rc-j9r2b
+  135  kubectl get pods
+  136  kubectl get rc
+  137  kubectl get pods
+  138  clear
+  139  ls -ltr
+  140  vi simple-rc.yml
+  141  clear
+  142  kubectl apply -f simple-rc.yml
+  143  kubectl get rc
+  144  kubectl get pods
+  145  clear
+  146  vi simple-service.yml
+  147  clear
+  148  kubectl apply -f simple-service.yml
+  149  kubectl get pods
+  150  kubectl get pods -o wide
+  151  kubectl get clusters
+  152  kubectl get cluster
+  153  kubectl --help
+  154  clear
+  155  kubectl get service
+  156  exit
+  157  clear
+  158* 
+  159  clear
+  160  kubeadm tokenlist
+  161  kubeadm token list
+  162  clear
+  163  kubeadm get nodes
+  164  kubectl get nodes
+  165  ip addr
+  166  clear
+  167  history
+  168  clear
+  169  ls -ltr
+  170  kubeadm token list
+  171  history
+  172  kubeadm token list
+  173  kubeadm token
+  174  clear
+  175  kubeadm token create
+  176  openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null |    openssl dgst -sha256 -hex | sed 's/^.* //'
+  177  clear
+  178  kubectl get nodes
+  179  clear
+  180  ls 
+  181  cd simple/
+  182  ls -ltr
+  183  vi simple-service.yml
+  184  clear
+  185  cd ..
+  186  sudo apt-get install git -y
+  187  clear
+  188  mkdir Codebase
+  189  cd Codebase/
+  190  git init
+  191  clear
+  192  git clone https://github.com/Vikranth77/Kubernetes-Practice.git
+  193  ls- ltr
+  194  ls -ltr
+  195  clear
+  196  cd ..
+  197  cd 
+  198  history
+  199  pwd
+  200  cd Codebase/Kubernetes-Practice/
+  201  pwd
+  202  history > file1.txt
