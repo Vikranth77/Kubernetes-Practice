@@ -290,8 +290,23 @@ For NoeJs & Python -differnet docker file
 Create the POD.yaml
 Create the Replica.yml
 create the Deployment.yml
+==============================================
 
-
+Rolling update to the Deployment:
+====================================
+kubectl apply -f dep.yml --record
+kubectl rollout status deployments
+kubectl get deploy jenkins-deploy
+kubectl rollout history deployments jenkins-deploy
+kubectl get rs
+==================================
+Rooled Out:
+==================
+kubectl describe deploy openmrs-deploy
+kubectl rollout undo deployment openmrs-deploy --to- revision=1
+kubectl get deploy
+kubectl rollout status deployments open-mrs-deploy
+===============================
 
 
 
